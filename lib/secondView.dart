@@ -4,7 +4,7 @@ import 'model.dart';
 
 class SecondView extends StatelessWidget {
   Widget build(context) {
-    var controller = TextEditingController(text:'');
+    var controller = TextEditingController();
 
     return StatefulBuilder(
         builder: (context, setState) => Scaffold(
@@ -24,7 +24,8 @@ class SecondView extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: 'What are you going to do?',
-                      contentPadding: const EdgeInsets.only(left: 20.0)),
+                      contentPadding: const EdgeInsets.only(left: 20.0)
+                      ),
                       controller: controller
                       ),
                       ),   
@@ -32,8 +33,9 @@ class SecondView extends StatelessWidget {
                 RaisedButton(
                     child: Text('+ADD'),
                     onPressed: () {
+                      var task = Task (text : controller.text);
                       Provider.of<MyState>(context, listen: false)
-                          .addItem(controller.text);
+                          .addItem(task);
                       Navigator.pop(context,
                         );
                     }),
