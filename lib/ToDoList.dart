@@ -19,18 +19,19 @@ class _ToDoListState extends State<ToDoList> {
     );
   }
 
-  Widget _item(context, Task item, index) {
+  Widget _item(context, Task task, index) {
     return ListTile(
-        title: Text(item.text),
+        title: Text(task.text),
         leading: Checkbox(
-          value: item.completed,
-          onChanged: (bool done) {
-            Provider.of<MyState>(context, listen: false).changeState(item);
+          value: task.completed,
+          onChanged: (bool checked) {
+            Provider.of<MyState>(context, listen: false)
+                .setCheckbox(task, checked);
           },
         ),
         trailing: IconButton(
           onPressed: () {
-            Provider.of<MyState>(context, listen: false).removeItem(index);
+            Provider.of<MyState>(context, listen: false).removeItem(task);
           },
           icon: Icon(Icons.cancel),
         ));

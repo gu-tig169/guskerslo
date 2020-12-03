@@ -15,8 +15,9 @@ class Task {
 
   static Map<String, dynamic> toJson(Task task) {
     return {
-      'text': task.text,
+      'title': task.text,
       'done': task.completed,
+      'id': task.id,
     };
   }
 
@@ -42,10 +43,6 @@ class MyState extends ChangeNotifier {
 
   String get filterBy => _filterBy;
 
-  UnmodifiableListView<Task> get filteredTasks {
-    if (_filterBy == 'All') return allTasks;
-  }
-
   UnmodifiableListView<Task> get allTasks => UnmodifiableListView(_list);
   UnmodifiableListView<Task> get incompleteTasks =>
       UnmodifiableListView(_list.where((task) => !task.completed));
@@ -60,22 +57,19 @@ class MyState extends ChangeNotifier {
 
   void addItem(Task task) async {
     await API.addTodo(task);
-    getList();
-    //_list.add(Task(text: text));
-    //notifyListeners();
+    await getList();
+    notifyListeners();
   }
 
   void removeItem(Task task) async {
     await API.deleteTask(task.id);
     await getList();
-    //_list.removeAt(index);
-    //notifyListeners();
   }
 
-  void changeState(Task task) {
-    final taskIndex = _list.indexOf(task);
-    _list[taskIndex].toggleCompleted();
-    notifyListeners();
+  void setCheckbox(Task task, bool done) async {
+    task.completed = done;
+    await API.updateTodos(task, task.id);
+    await getList();
   }
 
   void setFilterBy(String filterBy) {
