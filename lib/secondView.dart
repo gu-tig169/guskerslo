@@ -17,27 +17,29 @@ class SecondView extends StatelessWidget {
             ),
             body: Column(
               children: [
-                Container(height: 30,
+                Container(
+                  height: 30,
                 ),
                 Container(
                   width: 330.0,
                   child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'What are you going to do?',
-                      contentPadding: const EdgeInsets.only(left: 20.0)
-                      ),
-                      controller: controller
-                      ),
-                      ),   
-                Container (height: 30,),
+                      decoration: InputDecoration(
+                          hintText: 'What are you going to do?',
+                          contentPadding: const EdgeInsets.only(left: 20.0)),
+                      controller: controller),
+                ),
+                Container(
+                  height: 30,
+                ),
                 RaisedButton(
                     child: Text('+ADD'),
                     onPressed: () {
-                      var task = Task (text : controller.text);
+                      var task = Task(text: controller.text);
                       Provider.of<MyState>(context, listen: false)
                           .addItem(task);
-                      Navigator.pop(context,
-                        );
+                      Navigator.pop(
+                        context,
+                      );
                     }),
               ],
             )));
